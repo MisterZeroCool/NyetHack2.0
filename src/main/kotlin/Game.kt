@@ -16,6 +16,7 @@ fun main(args: Array<String>) {
     printPlayerStatus(auraColor, isBlessed, name, healthStatus)
 
     castFireball()
+    println( odurmanivanie())
 
 
 // if/else
@@ -116,3 +117,17 @@ private fun printPlayerStatus(auraColor: String,
 private fun castFireball(numFireball: Int = 2) {
     println("A glass of Fireball springs into existence. (x$numFireball)")
 }
+
+private fun odurmanivanie(numFireball: Int = 0)
+   = when(numFireball){
+        in 41 .. 50 -> "t0aSt3d"
+        in 31 .. 40 -> "Stewed"
+        in 21 .. 30 -> "Soused"
+        in 11 .. 20 -> "Sloshed"
+        in 1 .. 10 -> "Tipsy"
+    else -> {"трезвый"}
+}
+
+
+
+
