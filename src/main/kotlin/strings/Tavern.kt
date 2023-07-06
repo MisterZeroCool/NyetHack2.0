@@ -9,6 +9,7 @@ var playerSilver = 10
 
 fun main(args: Array<String>) {
     placeOrder("shandy, Dragon's Breath, 5.91")
+    println(countPintBeer(40))
 
 
 }
@@ -63,4 +64,24 @@ fun performPurchase(price: Double){
 
 private fun displayBalance(){
     println("Player's purse balance: Gold: $playerGold, Silver: $playerSilver")
+}
+
+private fun countPintBeer(order: Int = 0){
+    var bochka = 5.0
+    val pinta = 0.125
+    when(order){
+        40 -> "empty"
+        in 1..39 -> {
+            val pints = (pinta*order)
+            bochka -= pints
+            "остаток в пинтах $bochka после $order заказов "}
+        0 -> "no orders"
+    }
+//    if(order != 0){
+//        val pints = (pinta*order)
+//        bochka -= pints
+//        println("остаток в пинтах $bochka после $order заказов ")
+//    }else{
+//        println("no orders")
+//    }
 }
