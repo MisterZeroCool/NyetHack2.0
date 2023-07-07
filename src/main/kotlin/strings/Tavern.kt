@@ -3,13 +3,15 @@ package strings
 import kotlin.math.roundToInt
 
 const val TAVERN_NAME ="Taernyl's Folly"
-
+var bochka = 5.0
+val pinta = 0.125
 var playerGold = 10
 var playerSilver = 10
 
 fun main(args: Array<String>) {
     placeOrder("shandy, Dragon's Breath, 5.91")
-    println(countPintBeer(40))
+    val ostatoc = countPintBeer(10000)
+    println(ostatoc)
 
 
 }
@@ -66,17 +68,21 @@ private fun displayBalance(){
     println("Player's purse balance: Gold: $playerGold, Silver: $playerSilver")
 }
 
-private fun countPintBeer(order: Int = 0){
-    var bochka = 5.0
-    val pinta = 0.125
+private fun countPintBeer(order: Int = 0)
+    =        if (order > 40){
+    "открывайте новую бочку"
+}else {
     when(order){
-        40 -> "empty"
+        40 -> "в бочке ничего не осталось"
         in 1..39 -> {
-            val pints = (pinta*order)
+            val pints = (pinta * order)
             bochka -= pints
-            "остаток в пинтах $bochka после $order заказов "}
+            "после $order заказов, остаток в пинтах  составил $bochka "
+        }
         0 -> "no orders"
+        else -> {}
     }
+}
 //    if(order != 0){
 //        val pints = (pinta*order)
 //        bochka -= pints
@@ -84,4 +90,3 @@ private fun countPintBeer(order: Int = 0){
 //    }else{
 //        println("no orders")
 //    }
-}
