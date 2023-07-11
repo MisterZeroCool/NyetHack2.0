@@ -8,10 +8,32 @@ val pinta = 0.125
 var playerGold = 10
 var playerSilver = 10
 
+val patronList = listOf("Eli","Mordoc", "Sophie")
+
 fun main(args: Array<String>) {
+    //contains
+    if (patronList.contains("Eli")) {
+        println("The tavern master says: Eli's in the back playing cards.")
+    } else {
+        println("The tavern master says: Eli isn't here.")
+    }
+//containsAll
+    if (patronList.containsAll(listOf("Sophie", "Mordoc"))) {
+        println("The tavern master says: Yea, they're seated by the stew kettle.")
+    } else {
+        println("The tavern master says: Nay, they departed hours ago.")
+    }
+
+
     placeOrder("shandy, Dragon's Breath, 5.91")
     val ostatoc = countPintBeer(10000)
     println(ostatoc)
+    println(patronList[0])
+
+    println( patronList.getOrElse(4) { "Unknown Patron" })
+
+    val fifthPatron = patronList.getOrNull(4) ?: "Unknown Patron"
+    println(fifthPatron)
 
 
 }
