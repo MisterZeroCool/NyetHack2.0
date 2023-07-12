@@ -1,5 +1,6 @@
 package strings
 
+import java.io.File
 import kotlin.math.roundToInt
 
 const val TAVERN_NAME ="Taernyl's Folly"
@@ -12,6 +13,7 @@ var playerSilver = 10
 val patronList = listOf("Eli","Mordoc", "Sophie")
 //изменяемая коллекция
 val patronMutableList = mutableListOf("Eli","Mordoc", "Sophie")
+val menuList = File("src/main/kotlin/data/tavern-menu-items.txt").readText().split("\n")
 
 fun main(args: Array<String>) {
     //contains
@@ -68,7 +70,11 @@ fun main(args: Array<String>) {
 //foreEachIndexed
     patronList.forEachIndexed { index, patron ->
         println("Good evening, $patron - you're #${index + 1}")
-        placeOrder(patron,"shandy, Dragon's Breath, 5.91")
+        placeOrder(patron, menuList.shuffled().first())
+    }
+
+    menuList.forEachIndexed(){index, product ->
+        println("$index: $product")
     }
 
 
