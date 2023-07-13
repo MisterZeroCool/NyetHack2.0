@@ -13,6 +13,8 @@ var playerSilver = 10
 val patronList = listOf("Eli","Mordoc", "Sophie")
 //изменяемая коллекция
 val patronMutableList = mutableListOf("Eli","Mordoc", "Sophie")
+val lastName = listOf("Ironfoot", "Fernsworth", "Baggins")
+val uniquePatrons = mutableSetOf<String>()
 val menuList = File("src/main/kotlin/data/tavern-menu-items.txt").readText().split("\n")
 
 fun main(args: Array<String>) {
@@ -68,15 +70,29 @@ fun main(args: Array<String>) {
 
     println()
 //foreEachIndexed
-    patronList.forEachIndexed { index, patron ->
-        println("Good evening, $patron - you're #${index + 1}")
-        placeOrder(patron, menuList.shuffled().first())
-    }
+//    patronList.forEachIndexed { index, patron ->
+//        println("Good evening, $patron - you're #${index + 1}")
+//        placeOrder(patron, menuList.shuffled().first())
+//    }
 
-    menuList.forEachIndexed(){index, product ->
-        println("$index: $product")
+//    menuList.forEachIndexed(){index, product ->
+//        println("$index: $product")
+//    }
+    (0..9).forEach {
+        val first = patronList.shuffled().first()
+//Функция shuffle() перемешивает элементы изменяемого списка в случайном порядке.
+        val last = lastName.shuffled().first()
+        val name = "$first $last"
+        uniquePatrons += name
     }
+    println(uniquePatrons)
 
+    var orderCount = 0
+    while (orderCount <= 9) {
+        placeOrder(uniquePatrons.shuffled().first(),
+            menuList.shuffled().first())
+        orderCount++
+    }
 
 
 }
