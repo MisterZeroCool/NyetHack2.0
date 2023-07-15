@@ -4,7 +4,6 @@ import java.io.File
 
 
 val menuList = File("src/main/kotlin/data/tavern-menu-items.txt").readText().split("\n")
-val fileListWriter = mutableListOf<String>()
 fun printMenu() {
     // Вставляем пустую строку,
     // чтобы отделить заголовок меню
