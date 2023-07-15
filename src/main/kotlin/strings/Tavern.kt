@@ -6,19 +6,35 @@ import kotlin.math.roundToInt
 const val TAVERN_NAME ="Taernyl's Folly"
 var bochka = 5.0
 val pinta = 0.125
-var playerGold = 10
-var playerSilver = 10
+//var playerGold = 10
+//var playerSilver = 10
 
-//коллекция только для чтения
+//коллекция только для чтения List
 val patronList = listOf("Eli","Mordoc", "Sophie")
-//изменяемая коллекция
+//изменяемая коллекция List
 val patronMutableList = mutableListOf("Eli","Mordoc", "Sophie")
+
+//создание неизменяемой коллекции с фамилиями
 val lastName = listOf("Ironfoot", "Fernsworth", "Baggins")
+
+//создание Set
 val uniquePatrons = mutableSetOf<String>()
+
+//чтение данных из файла
 val menuList = File("src/main/kotlin/data/tavern-menu-items.txt").readText().split("\n")
 
+//создадим ассоциативный массив который будет показывть кол. денег у игроков
+//val patronGold = mapOf("Eli" to 10.5, "Mordoc" to 8.0, "Sophie" to 5.5)
+
+//создание ассоциативного массива использовав тип Pair
+val patronGoldPair = mapOf(Pair("Eli", 10.75),Pair("Mordoc", 8.00),
+    Pair("Sophie", 5.50))
+
+//Добавление записей в ассоциативный массив
+val patronGoldMutable = mutableMapOf<String,Double>()
+
 fun main(args: Array<String>) {
-    //contains
+    //contains(содержит ли коллекция определенное значение)
     if (patronList.contains("Eli")) {
         println("The tavern master says: Eli's in the back playing cards.")
     } else {
@@ -85,7 +101,12 @@ fun main(args: Array<String>) {
         val name = "$first $last"
         uniquePatrons += name
     }
-    println(uniquePatrons)
+//    println(uniquePatrons)
+
+//  выведем значения из Map
+    uniquePatrons.forEach{
+        patronGoldMutable[it] = 6.0
+    }
 
     var orderCount = 0
     while (orderCount <= 9) {
@@ -93,6 +114,21 @@ fun main(args: Array<String>) {
             menuList.shuffled().first())
         orderCount++
     }
+//выводим деньги посетителей
+    displayPatronBalances()
+
+    //выводим ассоциативный массив
+//    println(patronGold)
+//при добавлении в Map элемента с тем же ключем, существующая пара будет затерта новой
+//    val patronGoldMutable = mutableMapOf("Eli" to 5.0, "Sophie" to 1.0)
+//    patronGoldMutable += "Sophie" to 6.0
+//    println(patronGoldMutable)
+//  {Eli=5.0, Sophie=6.0}
+
+//    Вывод элементов по ключу. Вывод будет содержать только значения, без ключей!
+//    println(patronGold["Eli"])
+//    println(patronGold["Mordoc"])
+//    println(patronGold["Sophie"])
 
 
 }
@@ -120,7 +156,7 @@ private fun placeOrder(patronName: String, menuData: String) {
     val message = "$patronName buys a $name ($type) for $price."
     println(message)
 
-//    performPurchase(price.toDouble())
+    performPurchase(price.toDouble(), patronName)
 
     val phrase = if (name == "Dragon's Breath") {
         "$patronName exclaims: ${toDragonSpeak("Ah, delicious $name!")}"
@@ -130,24 +166,29 @@ private fun placeOrder(patronName: String, menuData: String) {
     println(phrase)
 }
 
-fun performPurchase(price: Double){
-    displayBalance()
-    val totalPurse = playerGold + (playerSilver / 100.0)
-    println("Total purse: $totalPurse")
-    println("Purchasing item for $price")
+//fun performPurchase(price: Double){
+//    displayBalance()
+//    val totalPurse = playerGold + (playerSilver / 100.0)
+//    println("Total purse: $totalPurse")
+//    println("Purchasing item for $price")
+//
+//    val remainingBalance = totalPurse - price
+//    println("Remaining balance: ${"%.2f".format(remainingBalance)}")
+//
+//    val remainingGold = remainingBalance.toInt()
+//    val remainingSilver = (remainingBalance % 1 * 100).roundToInt()
+//    playerGold = remainingGold
+//    playerSilver = remainingSilver
+//    displayBalance()
+//}
 
-    val remainingBalance = totalPurse - price
-    println("Remaining balance: ${"%.2f".format(remainingBalance)}")
+//private fun displayBalance(){
+//    println("Player's purse balance: Gold: $playerGold, Silver: $playerSilver")
+//}
 
-    val remainingGold = remainingBalance.toInt()
-    val remainingSilver = (remainingBalance % 1 * 100).roundToInt()
-    playerGold = remainingGold
-    playerSilver = remainingSilver
-    displayBalance()
-}
-
-private fun displayBalance(){
-    println("Player's purse balance: Gold: $playerGold, Silver: $playerSilver")
+fun performPurchase(price: Double, patronName: String) {
+    val totalPurse = patronGoldMutable.getValue(patronName)
+    patronGoldMutable[patronName] = totalPurse - price
 }
 
 private fun countPintBeer(order: Int = 0)
@@ -172,3 +213,10 @@ private fun countPintBeer(order: Int = 0)
 //    }else{
 //        println("no orders")
 //    }
+
+//функция выводит баланс посетителей
+private fun displayPatronBalances() {
+    patronGoldMutable.forEach { patron, balance ->
+        println("$patron, balance: ${"%.2f".format(balance)}")
+    }
+}
