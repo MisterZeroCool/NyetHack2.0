@@ -1,10 +1,14 @@
 import kotlin.math.pow
 
 fun main(args: Array<String>) {
-    val name = "Madrigal"
     var healthPoints = 89
     val isBlessed = true
     val isImmortal = false
+
+//  Создаем объект класса
+    val player = Player()
+//    Вызывае функцию для данного объекта
+    player.castFireball()
 
     val healthStatus = formatHealthStatus(healthPoints, isBlessed)
     //println("$name $healthStatus")
@@ -13,9 +17,9 @@ fun main(args: Array<String>) {
     val auraColor = auraColor(isBlessed, healthPoints, isImmortal)
 
     // Состояние игрока
-    printPlayerStatus(auraColor, isBlessed, name, healthStatus)
+    printPlayerStatus(auraColor, isBlessed, player.name, healthStatus)
 
-    castFireball()
+
     println( odurmanivanie())
 
 
@@ -112,10 +116,6 @@ private fun printPlayerStatus(auraColor: String,
                 "(Blessed: ${if (isBlessed) "YES" else "NO"})"
     )
     println("$name $healthStatus")
-}
-
-private fun castFireball(numFireball: Int = 2) {
-    println("A glass of Fireball springs into existence. (x$numFireball)")
 }
 
 private fun odurmanivanie(numFireball: Int = 0)
