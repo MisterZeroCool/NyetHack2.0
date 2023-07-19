@@ -1,4 +1,4 @@
-import java.lang.IllegalStateException
+package ru.bignerdranch.nyethack
 
 fun main(args: Array<String>) {
     var swordsJuggling: Int? = null
