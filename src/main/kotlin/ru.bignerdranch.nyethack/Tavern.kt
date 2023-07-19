@@ -1,7 +1,6 @@
-package strings
+package ru.bignerdranch.nyethack
 
 import java.io.File
-import kotlin.math.roundToInt
 
 const val TAVERN_NAME ="Taernyl's Folly"
 var bochka = 5.0
@@ -110,7 +109,8 @@ fun main(args: Array<String>) {
 
     var orderCount = 0
     while (orderCount <= 9) {
-        placeOrder(uniquePatrons.shuffled().first(),
+        placeOrder(
+            uniquePatrons.shuffled().first(),
             menuList.shuffled().first())
         orderCount++
     }
