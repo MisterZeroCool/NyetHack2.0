@@ -6,7 +6,7 @@ fun main(args: Array<String>) {
 
 
 //  Создаем объект класса
-    val player = Player()
+    val player = Player("Madrigal")
 //    Вызывае функцию для данного объекта
     player.castFireball()
 
