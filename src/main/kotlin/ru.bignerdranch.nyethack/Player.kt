@@ -1,14 +1,44 @@
 package ru.bignerdranch.nyethack
 
-class Player {
-    var name = "madrigal"
-        get() = field.capitalize()
+import java.io.File
+import java.util.*
+
+//Главный конструктор
+class Player(
+    _name: String,
+    var healthPoints: Int = 100,
+    val isBlessed: Boolean,
+    private val isImmortal: Boolean
+) {
+    var name = "Madrigal"
+        get() = "${field.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }} of $hometown"
         set(value) {
             field = value.trim()
         }
-    var healthPoints = 89
-    val isBlessed = true
-    private val isImmortal = false
+
+    //Город где родился игрок
+    //val hometown = selectHometown()
+
+    private val hometown by lazy { selectHometown() }
+
+    //Блок инициализации
+    //Если хотя бы одно из условий не выполнится, будет возбуждено исключение
+    //IllegalArgumentException (можем проверить это в Kotlin REPL, передав в Player
+    //другие параметры).
+    init {
+        require(healthPoints > 0) { "healthPoints must be greater than zero." }
+        require(name.isNotBlank()) { "Player must have a name" }
+    }
+
+    //Вспомогательный конструктор
+    constructor(name: String) :
+            this(
+                name,
+                isBlessed = true,
+                isImmortal = false
+            ) {
+        if (name.lowercase(Locale.getDefault()) == "kar") healthPoints = 40
+    }
 
     //    Выводим ауру игрока
     fun auraColor(
@@ -37,6 +67,12 @@ class Player {
 
     fun castFireball(numFireballs: Int = 2) =
         println("A glass of Fireball springs into existence. (x$numFireballs)")
+
+    private fun selectHometown() = File("src/main/kotlin/data/towns.txt")
+        .readText()
+        .split("\n")
+        .shuffled()
+        .first()
 
 }
 
