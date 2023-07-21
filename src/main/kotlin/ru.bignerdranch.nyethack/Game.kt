@@ -7,6 +7,8 @@ fun main(args: Array<String>) {
 
 //  Создаем объект класса
     val player = Player("Madrigal")
+//    val currentRoom = Room("Foyer")
+    val currentRoom: Room = TownSquare()
 //    Вызывае функцию для данного объекта
     player.castFireball()
 
@@ -16,8 +18,11 @@ fun main(args: Array<String>) {
     // Аура
     player.auraColor(player.isBlessed)
 
-
     println( intoxication())
+
+    //вывод информации о комнате
+    println(currentRoom.description())
+    println(currentRoom.load())
 
 
 
