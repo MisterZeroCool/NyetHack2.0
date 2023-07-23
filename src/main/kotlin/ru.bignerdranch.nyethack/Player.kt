@@ -18,8 +18,10 @@ class Player(
 
     //Город где родился игрок
     //val hometown = selectHometown()
-
     private val hometown by lazy { selectHometown() }
+
+    //перемещение игрока по карте
+    var currentPosition = Coordinate(0,0)
 
     //Блок инициализации
     //Если хотя бы одно из условий не выполнится, будет возбуждено исключение
