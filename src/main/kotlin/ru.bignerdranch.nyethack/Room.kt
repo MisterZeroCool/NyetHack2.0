@@ -1,6 +1,7 @@
 package ru.bignerdranch.nyethack
 
-open class Room(private val name:String) {
+open class Room(private val name:String,) {
+
     //уровень опасности комнаты
     protected open val dangerLevel = 5
     //returns name of room
