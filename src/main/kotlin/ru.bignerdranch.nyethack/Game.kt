@@ -1,5 +1,7 @@
 package ru.bignerdranch.nyethack
 
+import java.lang.Exception
+import java.lang.IllegalStateException
 import java.util.*
 import kotlin.math.pow
 
@@ -22,7 +24,12 @@ object Game {
     //  Создаем объект класса
     private val player = Player("Madrigal")
     //    val currentRoom = Room("Foyer")
-    private val currentRoom: Room = TownSquare()
+    private var currentRoom: Room = TownSquare()
+
+    //Карта Мира где игрок может перемещаться
+    private var worldMap = listOf(
+        listOf(currentRoom, Room("Tavern"), Room("Back Room")),
+        listOf(Room("Long Corridor"), Room("Generic Room")))
 
     init {
         println("Welcome, adventurer.")
@@ -66,17 +73,37 @@ object Game {
         else -> "has not karma"
     }
 
+
+    private fun move(directionInput: String) =
+        try {
+            val direction = Direction.valueOf(directionInput.toUpperCase())
+            val newPosition = direction.updateCoordinate(player.currentPosition)
+            if (!newPosition.isInBounds) {
+                throw IllegalStateException("$direction is out of bounds.")
+            }
+            val newRoom = worldMap[newPosition.y][newPosition.x]
+            player.currentPosition = newPosition
+            currentRoom = newRoom
+            "OK, you move $direction to the ${newRoom.name}.\n${newRoom.load()}"
+        } catch (e: Exception) {
+            "Invalid direction: $directionInput."
+        }
+
+
     private class GameInput(arg: String?){
         private val input = arg ?: ""
         val command = input.split(" ")[0]
         val argument = input.split(" ").getOrElse(1) { "" }
 
         fun processCommand() = when(command.lowercase(Locale.getDefault())){
+            "move" -> move(argument)
             else -> commandNotFound()
         }
 
         private fun commandNotFound() = "I'm not quite sure what you're trying to do!"
     }
+
+
 
 }
 
