@@ -51,7 +51,7 @@ object Game {
             println(karmaAuraColor)
 
             print("> Enter your command: ")
-            println(GameInput(readlnOrNull()).processCommand())
+            println(GameInput(readLine()).processCommand())
         }
     }
 
@@ -89,13 +89,20 @@ object Game {
             "Invalid direction: $directionInput."
         }
 
+    private fun fight() = currentRoom.monster?.let{
+        while (player.healthPoints > 0 && it.healthPoints > 0) {
+            Thread.sleep(1000)
+        }
+        "Combat complete."
+    } ?: "There's nothing here to fight."
+
 
     private class GameInput(arg: String?){
         private val input = arg ?: ""
         val command = input.split(" ")[0]
         val argument = input.split(" ").getOrElse(1) { "" }
 
-        fun processCommand() = when(command.lowercase(Locale.getDefault())){
+        fun processCommand() = when(command.toLowerCase()){
             "move" -> move(argument)
             else -> commandNotFound()
         }
