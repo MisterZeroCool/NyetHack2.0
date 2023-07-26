@@ -4,14 +4,14 @@ import java.io.File
 import java.util.*
 
 //Главный конструктор
-class Player(
+class Player (
     _name: String,
     var healthPoints: Int = 100,
     val isBlessed: Boolean,
-    private val isImmortal: Boolean
-) {
+    private val isImmortal: Boolean,
+) : FightTable {
     var name = "Madrigal"
-        get() = "${field.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }} of $hometown"
+        get() = "${field.toLowerCase()} of $hometown"
         set(value) {
             field = value.trim()
         }
@@ -39,7 +39,7 @@ class Player(
                 isBlessed = true,
                 isImmortal = false
             ) {
-        if (name.lowercase(Locale.getDefault()) == "kar") healthPoints = 40
+        if (name.capitalize() == "kar") healthPoints = 40
     }
 
     //    Выводим ауру игрока
@@ -75,6 +75,19 @@ class Player(
         .split("\n")
         .shuffled()
         .first()
+
+    override val diceCount: Int = 3
+    override val diceSides: Int =6
+
+    override fun attack(opponent: FightTable): Int {
+        val damageDealt = if(isBlessed){
+            damageRoll * 2
+        }else{
+            damageRoll
+        }
+        opponent.healthPoints -= damageDealt
+        return damageDealt
+    }
 
 }
 
